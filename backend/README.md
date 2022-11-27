@@ -1,12 +1,3 @@
-# nodejs-express-jwt
-
-> Express REST API Boilerplate with JWT Authentication and support for MySQL and PostgreSQL.
-
-- Compilation via [Babel](https://babeljs.io/);
-- Authentication via [JWT](https://jwt.io/);
-- Routes mapping via [express-routes-mapper](https://github.com/aichbauer/express-routes-mapper);
-- Environments for `development`, `testing`, and `production`.
-
 ## Table of Contents
 
 - [Version notice](#version-notice)
@@ -22,18 +13,9 @@
 - [npm scripts](#npm-scripts)
 - [License]()
 
-## Version notice
-
-This project came a long way since the initial release in 2018. If you used this boilerplate before 2021, you should check a [v0.x.x branch](https://github.com/MarkKhramko/nodejs-express-jwt/tree/v0.x.x) and [v0 tags](https://github.com/MarkKhramko/nodejs-express-jwt/releases/tag/v0.0.0) for the latest changes of v0.
-
 ## Install and Use
 
 Start by cloning this repository
-
-```sh
-# HTTPS
-$ git clone https://github.com/MarkKhramko/nodejs-express-jwt
-```
 
 then use [npm](https://www.npmjs.com/) to
 
@@ -43,7 +25,7 @@ $ cd nodejs-express-jwt
 # Install dependencies
 $ npm i
 # Copy environment file 
-$ cp .env.example .env
+$ cp .example.env .env
 # Fill .env file
 # ...
 # If you want to use PostgreSQL (optional)
@@ -363,8 +345,3 @@ This command:
 
 This command:
 - Inserts all seeds, configured in `/migrator/seeder.js` into the database.
-
-
-## LICENSE
-
-MIT 2018-present. By [Mark Khramko](https://github.com/MarkKhramko)
