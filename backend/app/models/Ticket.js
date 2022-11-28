@@ -31,6 +31,11 @@ const Ticket = database.define(
             type: DataTypes.STRING(255),
             allowNull: true,
         },
+        status: {
+            type: DataTypes.STRING(80),
+            allowNull: false,
+            defaultValue: 'pending',
+        },
     },
     {
         // Enable automatic 'createdAt' and 'updatedAt' fields.

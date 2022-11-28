@@ -25,6 +25,10 @@ function TicketsController() {
 				errorMessage = "Ticket not found";
 				statusCode = 400;
 				break;
+			case ('RoomNotFound'):
+				errorMessage = "Room not found";
+				statusCode = 400;
+				break;
 			// Perform your custom processing here...
 
 			default:
@@ -46,14 +50,16 @@ function TicketsController() {
 
 		try {
 			// Extract request input:
-			const { patientName, priority, patientNumber, department, issueContext } = req.body;
+			const { patientName, priority, patientNumber, department, issueContext, status, roomId } = req.body;
 			// Create new one.
 			const ticket = await ticketFacade.register({
 				patientName,
 				priority,
 				patientNumber,
 				department,
-				issueContext
+				issueContext,
+				status,
+				roomId
 			});
 
 
@@ -66,8 +72,81 @@ function TicketsController() {
 			});
 		}
 		catch (error) {
-			console.error("UsersController._create error: ", error);
-			error.name = "UserAlreadyExists";
+			console.error("TicketController._create error: ", error);
+			return _processError(error, req, res);
+		}
+	}
+
+	const _updateStatus = async (req, res) => {
+
+		try {
+			// Extract request input:
+			const { ticketId, status } = req.body;
+			// Create new one.
+			const ticket = await ticketFacade.updateStatus({
+				ticketId,
+				status
+			});
+
+			// Everything's fine, send response.
+			return createOKResponse({
+				res,
+				content: {
+					ticket
+				}
+			});
+		}
+		catch (error) {
+			console.error("TicketController._create error: ", error);
+			return _processError(error, req, res);
+		}
+	}
+
+	const _updateDepartment = async (req, res) => {
+
+		try {
+			// Extract request input:
+			const { ticketId, department } = req.body;
+			// Create new one.
+			const ticket = await ticketFacade.changeDepartment({
+				ticketId,
+				department
+			});
+
+			// Everything's fine, send response.
+			return createOKResponse({
+				res,
+				content: {
+					ticket
+				}
+			});
+		}
+		catch (error) {
+			console.error("TicketController._create error: ", error);
+			return _processError(error, req, res);
+		}
+	}
+
+	const _getTicketInfo = async (req, res) => {
+
+		try {
+			// Extract request input:
+			const ticketId = req.params.ticketId
+			// Create new one.
+			const ticket = await ticketFacade.getTicketInfo({
+				ticketId
+			});
+
+			// Everything's fine, send response.
+			return createOKResponse({
+				res,
+				content: {
+					ticket
+				}
+			});
+		}
+		catch (error) {
+			console.error("TicketController._create error: ", error);
 			return _processError(error, req, res);
 		}
 	}
@@ -75,5 +154,8 @@ function TicketsController() {
 
 	return {
 		register: _register,
+		updateStatus: _updateStatus,
+		updateDepartment: _updateDepartment,
+		getTicketInfo: _getTicketInfo
 	}
 }

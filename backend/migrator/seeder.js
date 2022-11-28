@@ -2,18 +2,18 @@
 require('dotenv').config();
 
 // Data to seed:
-const users = require('./seeds/users');
+const users = require('./seeds/room');
 // Import your seeders here...
 
 // Connection to database.
 const db = require('#services/db.service');
 
 
-async function _main () {
+async function _main() {
 	try {
-		if (process.env.NODE_ENV !== 'development'){
+		if (process.env.NODE_ENV !== 'development') {
 			const error = new Error("Can not make any actions in non-dev env.");
-		  throw error;
+			throw error;
 		};
 
 		// Make database connection active.
@@ -25,7 +25,7 @@ async function _main () {
 		console.warn("All seeds inserted");
 		process.exit(0);
 	}
-	catch(error) {
+	catch (error) {
 		console.error('Seeder error:', error);
 		process.exit(1);
 	}

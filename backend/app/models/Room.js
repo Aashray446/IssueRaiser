@@ -7,8 +7,9 @@ const Room = database.define(
     {
         roomId: {
             type: DataTypes.STRING(255),
-            unique: true,
-            allowNull: false
+            allowNull: false,
+            primaryKey: true,
+            defaultValue: DataTypes.UUIDV4,
         },
         name: {
             type: DataTypes.STRING(255),
