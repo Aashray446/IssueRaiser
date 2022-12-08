@@ -1,9 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import {
+  useLocation
+} from "react-router-dom";
+
 // import axios from "axios";
 
 const IssueForms = () => {
+
   const URL = "";
+
   const [patientData, setPatientData] = useState({
     firstName: "",
     lastName: "",
@@ -13,17 +19,31 @@ const IssueForms = () => {
     priority: "",
     complaint: "",
   });
+
   function handleDataChange(e) {
     const newData = { ...patientData };
     newData[e.target.id] = e.target.value;
     setPatientData(newData);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     // axios.post(URL, patientData);
   }
+
+  function useQuery() {
+    const { search } = useLocation();
+  
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+
+  let query = useQuery();
+
+
+  // URL query params should be like http://localhost:5174/?room-no=5
+
   return (
-    <div className="grid px-8 ">
+    <div className="grid px-8 mb-4">
       <form
         className="w-100 rounded-lg"
         action="post"
@@ -125,6 +145,9 @@ const IssueForms = () => {
             </label>
           </div>
         </div>
+        <div className="text-center border-y-2 pt-4 mb-4">
+          <p className="text-sm mb-4"> Room Number : {query.get('room-no')}</p>
+        </div>
         <div>
           <label
             for="message"
@@ -153,3 +176,5 @@ const IssueForms = () => {
 };
 
 export default IssueForms;
+
+{/* <h1>Room No: {query.get('room-id')}</h1> */}
