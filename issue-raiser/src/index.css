@@ -1,6 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+/* @layer components  {
+    .btn-primary {
+        @apply "bg-primary-400 text-white hover:bg-primary-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full text-center";
+    }
+} */
 
 html {
     background-color: rgba(236, 236, 233, 0.788);
@@ -11,11 +18,22 @@ html {
     top : 50%;
     left : 50%;
     transform : translate(-50%, -50%);
-    width: 30rem;
-    height: 82%;
+    width: 24rem;
+    height: 94vh;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
+.wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .wrapper {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 
 /* media query for mobile */
 @media (max-width: 640px) {

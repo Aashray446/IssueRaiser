@@ -1,20 +1,45 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    colors: {
+    colors: ({ colors }) => ({
       primary: {
-        100: '#e5f2d3',
-        200: '#c5eeb1',
-        300: '#8aec8b',
-        400: '#49e76c',
-        500: '#04cc58',
+        100: "#e5f2d3",
+        200: "#c5eeb1",
+        300: "#8aec8b",
+        400: "#49e76c",
+        500: "#04cc58",
       },
-
-      extend: {},
+      inherit: colors.inherit,
+      current: colors.current,
+      transparent: colors.transparent,
+      black: colors.black,
+      white: colors.white,
+      slate: colors.slate,
+      gray: colors.gray,
+      sky: colors.sky,
+      blue: colors.blue,
+      // "regal-blue": "#1B262C",
+      // "mid1-blue": "#0F4C75",
+      // "mid2-blue": "#3282B8",
+      // "lightest-blue": "#BBE1FA",
+    }),
+    lineHeight: {
+      none: "1",
+      tight: "1.25",
+      snug: "1.375",
+      normal: "1.5",
+      relaxed: "1.625",
+      loose: "2",
+      3: ".75rem",
+      4: "1rem",
+      5: "1.25rem",
+      6: "1.5rem",
+      7: "1.75rem",
+      8: "2rem",
+      9: "2.25rem",
+      10: "2.5rem",
     },
     plugins: [],
-  }
-}
+  },
+};

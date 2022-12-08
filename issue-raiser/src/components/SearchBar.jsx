@@ -4,17 +4,17 @@ import Turnstone from 'turnstone'
 export default function Searchbar() {
 
     const styles = {
-        input: 'w-full h-12 py-2 border-b pl-10 pr-6 ease-in-out duration-300 text-lg outline-none ',
-        inputFocus: 'w-full h-12 border-b -translate-y-2 ease-in-out duration-300 py-2 pl-10 pr-7 text-xl outline-none',
-        query: 'text-oldsilver-800 placeholder-oldsilver-400',
-        typeahead: 'text-crystal-500 border-white',
+        input: 'w-full h-12 py-2 border-b pl-2 pr-6 ease-in-out duration-300 text-sm text-gray-900 outline-none ',
+        inputFocus: 'w-full h-12 border-b -translate-y-2 ease-in-out duration-300 py-2 pl-2 pr-7 text-md outline-none',
+        query: 'placeholder-oldsilver-400',
+        typeahead: 'border-white',
         cancelButton: `absolute w-10 h-12 inset-y-0 left-0 items-center justify-center z-10 text-crystal-600 inline-flex sm:hidden`,
         clearButton: 'absolute inset-y-0 right-0 w-8 inline-flex items-center justify-center text-crystal-500 hover:text-hotpink-300',
-        listbox: 'w-full bg-white sm:border sm:border-crystal-500 sm:rounded text-left sm:mt-2 p-2 sm:drop-shadow-xl',
+        listbox: 'w-full bg-white border-x-2 border-b-2 sm:rounded text-left sm:mt-2 p-2 sm:drop-shadow-xl',
         groupHeading: 'cursor-default mt-2 mb-0.5 px-1.5 uppercase text-sm text-hotpink-300',
-        item: 'cursor-pointer p-1.5 text-lg overflow-ellipsis overflow-hidden text-oldsilver-700',
-        highlightedItem: 'cursor-pointer p-1.5 text-lg overflow-ellipsis overflow-hidden text-oldsilver-700 rounded bg-crystal-100',
-        match: 'font-semibold',
+        item: 'cursor-pointer p-1.5 text-lg overflow-ellipsis overflow-hidden',
+        highlightedItem: 'cursor-pointer p-1.5 text-lg overflow-ellipsis overflow-hidden rounded bg-crystal-100',
+        match: 'font-medium',
         noItems: 'cursor-default text-center my-20'
       }
       
