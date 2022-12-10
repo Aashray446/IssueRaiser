@@ -3,18 +3,15 @@ import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
 } from "react-router-dom";
 import ErrorPage from "./pages/errorPage";
 import Home from "./pages/home";
 import "./index.css";
 import LogoHeader from "./components/LogoHeader";
-import IssueForms from "./components/IssueForms";
 import ViewRequest from "./components/ViewRequest";
 import UpdateRequest from "./components/UpdateRequest";
 import IssueSuccess from "./pages/IssueSuccess";
-
-
+import { ErrorContextProvider } from "./services/ErrorContext";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,9 +35,13 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  
+  <React.StrictMode>  
+    <ErrorContextProvider>
     <LogoHeader/>
     <RouterProvider router={router} />
+    </ErrorContextProvider>
   </React.StrictMode>
 );

@@ -19,6 +19,7 @@ module.exports = {
       gray: colors.gray,
       sky: colors.sky,
       blue: colors.blue,
+      red: colors.red,
       // "regal-blue": "#1B262C",
       // "mid1-blue": "#0F4C75",
       // "mid2-blue": "#3282B8",

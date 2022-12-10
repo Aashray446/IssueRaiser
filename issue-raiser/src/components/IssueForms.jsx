@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   useLocation
 } from "react-router-dom";
+import { useToggleError } from "../services/ErrorContext";
 import Dropdown from "./dropdown";
 
 
@@ -52,8 +53,16 @@ const IssueForms = () => {
      });
   }
 
+  const toggle = useToggleError();
+
   function handleSubmit(e) {
     e.preventDefault();
+
+    toggle({
+      error: true,
+      message: "Oops went wrong.",
+    });
+    
     // axios.post(URL, patientData);
     console.log(patientData);
   }
