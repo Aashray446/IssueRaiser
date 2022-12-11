@@ -1,6 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 // import Timeline from "./Timeline";
 const PendingRequest = () => {
+
+  const { id } = useParams();
+
   const TimelineData = [
     {
       date: "17 February 2022",
@@ -17,6 +21,7 @@ const PendingRequest = () => {
   ];
   return (
     <div className="p-8">
+      <div className="mb-2">ID : <span className="text-sm"> {id}</span></div>
       <div className="border-solid border-4 p-5 border-rounded hover:border-dotted">
         <div className="text-lg">Average Response Time</div>
         <div className="mt-5 text-sm">

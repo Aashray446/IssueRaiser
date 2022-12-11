@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/pendingRequest",
+    path: "/pendingRequest/:id",
     element: <PendingRequest />,
     errorElement: <ErrorPage />,
   }
