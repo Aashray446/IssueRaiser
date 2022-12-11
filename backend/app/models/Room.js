@@ -9,7 +9,6 @@ const Room = database.define(
             type: DataTypes.STRING(255),
             allowNull: false,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
         },
         name: {
             type: DataTypes.STRING(255),
