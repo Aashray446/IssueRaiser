@@ -8,11 +8,12 @@ import ErrorPage from "./pages/errorPage";
 import Home from "./pages/home";
 import "./index.css";
 import LogoHeader from "./components/LogoHeader";
-import ViewRequest from "./components/ViewRequest";
-import UpdateRequest from "./components/UpdateRequest";
 import IssueSuccess from "./pages/IssueSuccess";
 import PendingRequest from "./components/PendingRequest";
 import { ErrorContextProvider } from "./services/ErrorContext";
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,16 +23,6 @@ const router = createBrowserRouter([
   {
     path: "/issueSuccess/:id",
     element: <IssueSuccess />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/viewRequest",
-    element: <ViewRequest />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/updateRequest",
-    element: <UpdateRequest />,
     errorElement: <ErrorPage />,
   },
   {
