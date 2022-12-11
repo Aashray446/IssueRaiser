@@ -1,5 +1,5 @@
 import React from "react";
-import Timeline from "./Timeline";
+// import Timeline from "./Timeline";
 const PendingRequest = () => {
   const TimelineData = [
     {
@@ -53,7 +53,7 @@ const PendingRequest = () => {
       <form action="post">
         <button
           type="submit"
-          className="bg-primary-400 text-white hover:bg-primary-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
+          className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
         >
           Cancel
         </button>

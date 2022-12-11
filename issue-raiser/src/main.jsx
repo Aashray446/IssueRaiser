@@ -11,6 +11,7 @@ import LogoHeader from "./components/LogoHeader";
 import ViewRequest from "./components/ViewRequest";
 import UpdateRequest from "./components/UpdateRequest";
 import IssueSuccess from "./pages/IssueSuccess";
+import PendingRequest from "./components/PendingRequest";
 import { ErrorContextProvider } from "./services/ErrorContext";
 const router = createBrowserRouter([
   {
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
     element: <UpdateRequest />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/pendingRequest",
+    element: <PendingRequest />,
+    errorElement: <ErrorPage />,
+  }
 ]);
 
 
