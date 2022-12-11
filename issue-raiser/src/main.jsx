@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/issueSuccess",
+    path: "/issueSuccess/:id",
     element: <IssueSuccess />,
     errorElement: <ErrorPage />,
   },

@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import {
-  useLocation
+  useLocation, useNavigate 
 } from "react-router-dom";
 import { useToggleError } from "../services/ErrorContext";
+import { createTicket } from "../services/ticket";
 import Dropdown from "./dropdown";
-
 
 const IssueForms = () => {
 
@@ -16,7 +16,7 @@ const IssueForms = () => {
   }
 
   let query = useQuery();
-
+  let navigate = useNavigate();
 
 
   //  Business Logic  
@@ -58,13 +58,15 @@ const IssueForms = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
+    createTicket(patientData).then((res) => {
+      navigate('/issueSuccess/' + res.ticketId);
+    })
+    .catch((err) => {
     toggle({
       error: true,
-      message: "Oops went wrong.",
+      message: err,
     });
-    
-    // axios.post(URL, patientData);
-    console.log(patientData);
+    })
   }
 
 
@@ -90,8 +92,8 @@ const IssueForms = () => {
             required
           />
           <label
-            for="email"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            htmlFor="email"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Email address
           </label>
@@ -108,8 +110,8 @@ const IssueForms = () => {
               required
             />
             <label
-              for="patientName"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              htmlFor="patientName"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Name
             </label>
@@ -132,8 +134,8 @@ const IssueForms = () => {
               required
             />
             <label
-              for="phoneNumber"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              htmlFor="phoneNumber"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Phone number
             </label>
@@ -147,7 +149,7 @@ const IssueForms = () => {
         </div>
         <div>
           <label
-            for="issueContext"
+            htmlFor="issueContext"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Your Request
