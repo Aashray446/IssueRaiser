@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/CompletedRequest/:id",
+    path: "/completedRequest/:id",
     element: <CompletedRequest />,
     errorElement: <ErrorPage />,
   },

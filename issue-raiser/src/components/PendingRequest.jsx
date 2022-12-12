@@ -1,16 +1,12 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Navigate, useParams, useRouteError } from "react-router-dom";
+import { useNavigate, useParams, useRouteError } from "react-router-dom";
 import { useToggleError } from "../services/ErrorContext";
 import { getTicket } from "../services/ticket";
 // import Timeline from "./Timeline";
 const PendingRequest = () => {
-  const { id } = useParams();
-
-  const [
-    patientData, setPatientData] = useState([])
-
+  
   const TimelineData = [
     {
       date: "17 February 2022",
@@ -27,12 +23,20 @@ const PendingRequest = () => {
   ];
  
   const toggle = useToggleError();
+  let navigate = useNavigate();
+  const { id } = useParams();
+  const [patientData, setPatientData] = useState([])
+
 
   useEffect(()=> {
     getTicket(id).then((ticket)=> {
       ticket.createdAt = new Date(ticket.createdAt).toLocaleTimeString() + " " + new Date(ticket.createdAt).toLocaleDateString()
       setPatientData(ticket)
-      console.log(ticket)
+      
+      if(ticket.status == "closed") {
+        navigate('/completedRequest/'+id) 
+      }
+
     })
     .catch( (error)=> {
       toggle(

@@ -1,9 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useToggleError } from "../services/ErrorContext";
+import { getTicket } from "../services/ticket";
 // import Timeline from "./Timeline";
 const CompletedRequest = () => {
-  const { id } = useParams();
   //   Here we will make a get request and fetch the TimelineData array
   const TimelineData = [
     {
@@ -19,26 +20,38 @@ const CompletedRequest = () => {
       Action: "Issue Resolved",
     },
   ];
-  const dummyData = {
-    firstName: "Indira Kumar",
-    lastName: "A K",
-    department: "Room Services",
-    issueContext:
-      "Lorem ipsum mpor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-    openedDate: "17-02-2022",
-    closedDate: "20-02-2022",
-  };
-  const [patientData, setPatientData] = useState({
-    ...dummyData,
-  });
-  function handleDataChange(e) {
-    setPatientData((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-      };
-    });
+
+  const toggle = useToggleError();
+  const { id } = useParams();
+  const [patientData, setPatientData] = useState([])
+
+
+  useEffect(()=> {
+    getTicket(id).then((ticket)=> {
+      ticket.createdAt = new Date(ticket.createdAt).toLocaleTimeString() + " " + new Date(ticket.createdAt).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(ticket.createdAt).toLocaleString('default', { month: 'short' })
+      ticket.updatedAt = new Date(ticket.updatedAt).toLocaleTimeString() + " " + new Date(ticket.updatedAt).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(ticket.updatedAt).toLocaleString('default', { month: 'short' })
+      setPatientData(ticket)
+    })
+    .catch( (error)=> {
+      toggle(
+        {
+          error: true,
+          message: error,
+        }
+      );
+      
+    })
+  }, [])
+  
+  function raiseIssue() {
+    // here a put request for update patientData with feedback
+    toggle(
+      {
+        error: true,
+        message: "Your issue has been raised again successfully",
+      });
   }
+
   function handleFeedbackSubmit(e) {
     e.preventDefault();
 
@@ -64,7 +77,7 @@ const CompletedRequest = () => {
             Patient Name:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
-            {patientData.firstName + patientData.lastName}
+            {patientData.patientName}
           </p>
         </div>
         <div className="mb-2 ml-5">
@@ -72,7 +85,7 @@ const CompletedRequest = () => {
             Issue Opened Date:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
-            {patientData.openedDate}
+            {patientData.createdAt}
           </p>
         </div>
         <div className="mb-2 ml-5">
@@ -80,7 +93,7 @@ const CompletedRequest = () => {
             Issue Closed Date:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
-            {patientData.closedDate}
+            {patientData.updatedAt}
           </p>
         </div>
       </div>
@@ -96,27 +109,27 @@ const CompletedRequest = () => {
         <b>Time Line:</b>
       </p>
       <div className="overflow-y-auto">
-        <ol class="relative border-l border-gray-200 dark:border-gray-700 mt-5">
-          <li class="mb-10 ml-4">
-            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+        <ol className="relative border-l border-gray-200 dark:border-gray-700 mt-5">
+          <li className="mb-10 ml-4">
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               {TimelineData[0].date}
             </time>
-            <h3 class="text-sm  text-gray-900">{TimelineData[0].Action}</h3>
+            <h3 className="text-sm  text-gray-900">{TimelineData[0].Action}</h3>
           </li>
-          <li class="mb-10 ml-4">
-            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+          <li className="mb-10 ml-4">
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               {TimelineData[1].date}
             </time>
-            <h3 class="text-sm  text-gray-900">{TimelineData[1].Action}</h3>
+            <h3 className="text-sm  text-gray-900">{TimelineData[1].Action}</h3>
           </li>
-          <li class="mb-10 ml-4">
-            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+          <li className="mb-10 ml-4">
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               {TimelineData[2].date}
             </time>
-            <h3 class="text-sm  text-gray-900">{TimelineData[2].Action}</h3>
+            <h3 className="text-sm  text-gray-900">{TimelineData[2].Action}</h3>
           </li>{" "}
         </ol>
       </div>
@@ -142,15 +155,12 @@ const CompletedRequest = () => {
           Submit Feedback
         </button>
       </form>
-      {/* Here We will have a issueCompleted flag, and when "still not resolved" button is clicked, we will set the flag to false*/}
-      <form action="post">
         <button
-          type="submit"
+          onClick={raiseIssue}
           className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
         >
           Still Not Resolved?
         </button>
-      </form>
     </div>
   );
 };
