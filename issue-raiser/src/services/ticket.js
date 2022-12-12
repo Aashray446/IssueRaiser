@@ -20,14 +20,18 @@ export const createTicket = async (ticket) => {
     options.data = ticket;
 
     // Creating the ticket
-    const response = await axios(options);
-    if (response.data) {
-        return Promise.resolve(response.data.content.ticket[0]);
+    try {
+        const response = await axios(options);
+        // console.log(response);
+        if (response.data) {
+            return Promise.resolve(response.data.content.ticket[0]);
+        }
+    } catch (error) {
+        if (error.response?.data?.error?.message) {
+            return Promise.reject(error.response.data.error.message)
+        }
+        return Promise.reject("NETWORK ERROR")
     }
-    else {
-        return Promise.reject(response.message);
-    }
-
 }
 
 export const getTicket = async (ticketId) => {

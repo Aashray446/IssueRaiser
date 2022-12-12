@@ -40,6 +40,7 @@ async function _register({ patientName, priority, patientNumber, department, iss
 		return Promise.resolve(result);
 	}
 	catch (error) {
+		error.message = "Room not found"
 		return Promise.reject(error);
 	}
 }
