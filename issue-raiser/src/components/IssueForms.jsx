@@ -42,6 +42,7 @@ const IssueForms = () => {
     department: "",
     issueContext: "",
     priority: "",
+    roomId: query.get("room-no"),
   });
 
   function handleDataChange(e) {
@@ -57,7 +58,6 @@ const IssueForms = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     createTicket(patientData).then((res) => {
       navigate('/issueSuccess/' + res.ticketId);
     })

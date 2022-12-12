@@ -46,7 +46,7 @@ const CompletedRequest = () => {
   }
   return (
     <div className="p-8">
-      <div className="mb-2">
+      <div className="mb-2 text-center">
         ID : <span className="text-sm"> {id}</span>
       </div>
       <div className="border-solid border-4 p-5 border-rounded hover:border-dotted text-center mb-8">

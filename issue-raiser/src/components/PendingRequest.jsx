@@ -1,8 +1,15 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import { Navigate, useParams, useRouteError } from "react-router-dom";
+import { useToggleError } from "../services/ErrorContext";
+import { getTicket } from "../services/ticket";
 // import Timeline from "./Timeline";
 const PendingRequest = () => {
   const { id } = useParams();
+
+  const [
+    patientData, setPatientData] = useState([])
 
   const TimelineData = [
     {
@@ -18,60 +25,94 @@ const PendingRequest = () => {
       Action: "Action Pending",
     },
   ];
-  const patientData = {
-    firstName: "Indira Kumar",
-    lastName: "A K",
-    department: "Room Services",
-    issueContext: "Fan not working",
-  };
+ 
+  const toggle = useToggleError();
+
+  useEffect(()=> {
+    getTicket(id).then((ticket)=> {
+      ticket.createdAt = new Date(ticket.createdAt).toLocaleTimeString() + " " + new Date(ticket.createdAt).toLocaleDateString()
+      setPatientData(ticket)
+      console.log(ticket)
+    })
+    .catch( (error)=> {
+      toggle(
+        {
+          error: true,
+          message: error,
+        }
+      );
+      
+    })
+  }, [])
+  
+ 
+
+
   return (
     <div className="p-8">
-      <div className="mb-2">
+      <div className="mb-2 text-center">
         ID : <span className="text-sm"> {id}</span>
       </div>
-      <div className="border-solid border-4 p-5 border-rounded hover:border-dotted">
+      <div className="border-solid border-4 p-5 border-rounded hover:border-dotted mb-8">
         <div className="text-lg">Average Response Time</div>
         <div className="mt-5 text-sm">
           <i>48 mins</i>
         </div>
       </div>
-      <div className="p-5 pl-0">
-        <p>
-          <b>Issue Context:</b> {patientData.issueContext}
-        </p>
-        <p>
-          <b>Department:</b> {patientData.department}
-        </p>
-        <p>
-          <b>Patient Name:</b> {patientData.firstName + patientData.lastName}
-        </p>
+      <div className="grid grid-cols-2 mt-2">
+        <div className="mb-2 ml-5">
+          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+            Patient Name:
+          </h2>
+          <p className="md:text-sm text-gray-600 text-xs">
+            {patientData.patientName}
+          </p>
+        </div>
+        <div className="mb-2 ml-5">
+          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+            Issue Opened Date: 
+          </h2>
+          <p className="md:text-sm text-gray-600 text-xs">
+          {patientData.createdAt}
+          </p>
+        </div>
+        <div className="mb-2 ml-5">
+          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+            Issue Context:
+          </h2>
+          <p className="md:text-sm text-gray-600 text-xs">
+            {patientData.issueContext}
+          </p>
+        </div>
       </div>
+      
       <div className="overflow-y-auto">
-        <ol class="relative border-l border-gray-200 dark:border-gray-700 mt-10">
-          <li class="mb-10 ml-4">
-            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+        <ol className="relative border-l border-gray-200 dark:border-gray-700 mt-10">
+          <li className="mb-10 ml-4">
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               {TimelineData[0].date}
             </time>
-            <h3 class="text-sm  text-gray-900">{TimelineData[0].Action}</h3>
+            <h3 className="text-sm  text-gray-900">{TimelineData[0].Action}</h3>
           </li>
-          <li class="mb-10 ml-4">
-            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+          <li className="mb-10 ml-4">
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               {TimelineData[1].date}
             </time>
-            <h3 class="text-sm  text-gray-900">{TimelineData[1].Action}</h3>
+            <h3 className="text-sm  text-gray-900">{TimelineData[1].Action}</h3>
           </li>
-          <li class="mb-10 ml-4">
-            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+          <li className="mb-10 ml-4">
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               {TimelineData[2].date}
             </time>
-            <h3 class="text-sm  text-gray-900">{TimelineData[2].Action}</h3>
+            <h3 className="text-sm  text-gray-900">{TimelineData[2].Action}</h3>
           </li>{" "}
         </ol>
       </div>
         <button
+          
           className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
         >
           Cancel

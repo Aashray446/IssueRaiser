@@ -38,9 +38,14 @@ export const getTicket = async (ticketId) => {
     options.url = SERVER_URL + '/ticket/getTicketInfo/' + ticketId;
     options.method = 'GET';
     // Fetching the ticket info
-    const response = await axios(options);
-    if (response.data) {
-        console.log(response.data);
+    try {
+        const response = await axios(options);
+        if (response.data) {
+            return Promise.resolve(response.data.content.ticket[0])
+        }
+    } catch (error) {
+        return Promise.reject("Ticket Not Found")
     }
+
 }
 
