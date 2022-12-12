@@ -23,7 +23,8 @@ const CompletedRequest = () => {
     firstName: "Indira Kumar",
     lastName: "A K",
     department: "Room Services",
-    issueContext: "Fan not working",
+    issueContext:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     openedDate: "17-02-2022",
     closedDate: "20-02-2022",
   };
@@ -54,24 +55,42 @@ const CompletedRequest = () => {
           <i>Issue Resolved</i>
         </div>
       </div>
-      <div className="p-5 pl-0">
-        <p>
-          <b>Issue Context:</b> {patientData.issueContext}
-        </p>
-        <p>
-          <b>Department:</b> {patientData.department}
-        </p>
-        <p>
-          <b>Patient Name:</b> {patientData.firstName + patientData.lastName}
-        </p>
-        <p>
-          <b>Issue Opened Date:</b>
-          {patientData.openedDate}
-        </p>
-        <p>
-          <b>Issue Closed Date:</b>
-          {patientData.closedDate}
-        </p>
+      <p className="mt-5">
+        <b>Issue Summary:</b>
+      </p>
+      <div className="pb-5 pr-5 mt-2">
+        <div className="mb-2 ml-5">
+          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+            Patient Name:
+          </h2>
+          <p className="md:text-sm text-gray-600 text-xs">
+            {patientData.firstName + patientData.lastName}
+          </p>
+        </div>
+        <div className="mb-2 ml-5">
+          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+            Issue Opened Date:
+          </h2>
+          <p className="md:text-sm text-gray-600 text-xs">
+            {patientData.openedDate}
+          </p>
+        </div>
+        <div className="mb-2 ml-5">
+          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+            Issue Closed Date:
+          </h2>
+          <p className="md:text-sm text-gray-600 text-xs">
+            {patientData.closedDate}
+          </p>
+        </div>
+        <div className="mb-2 ml-5">
+          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+            Issue Context:
+          </h2>
+          <p className="md:text-sm text-gray-600 text-xs">
+            {patientData.issueContext}
+          </p>
+        </div>
       </div>
       <p>
         <b>Time Line:</b>
