@@ -24,7 +24,7 @@ const CompletedRequest = () => {
     lastName: "A K",
     department: "Room Services",
     issueContext:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      "Lorem ipsum mpor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     openedDate: "17-02-2022",
     closedDate: "20-02-2022",
   };
@@ -49,16 +49,16 @@ const CompletedRequest = () => {
       <div className="mb-2">
         ID : <span className="text-sm"> {id}</span>
       </div>
-      <div className="border-solid border-4 p-5 border-rounded hover:border-dotted text-center">
+      <div className="border-solid border-4 p-5 border-rounded hover:border-dotted text-center mb-8">
         <div className="text-lg">Congratulations!</div>
         <div className="mt-5 text-sm">
-          <i>Issue Resolved</i>
+          <i>Your problem has been addressed</i>
         </div>
       </div>
       <p className="mt-5">
         <b>Issue Summary:</b>
       </p>
-      <div className="pb-5 pr-5 mt-2">
+      <div className="grid grid-cols-2 mt-2">
         <div className="mb-2 ml-5">
           <h2 className="md:text-sm tracking-normal text-xs font-semibold">
             Patient Name:
@@ -83,7 +83,8 @@ const CompletedRequest = () => {
             {patientData.closedDate}
           </p>
         </div>
-        <div className="mb-2 ml-5">
+      </div>
+      <div className="mb-8 ml-5">
           <h2 className="md:text-sm tracking-normal text-xs font-semibold">
             Issue Context:
           </h2>
@@ -91,7 +92,6 @@ const CompletedRequest = () => {
             {patientData.issueContext}
           </p>
         </div>
-      </div>
       <p>
         <b>Time Line:</b>
       </p>
