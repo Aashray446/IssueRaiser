@@ -71,16 +71,11 @@ const PendingRequest = () => {
           </li>{" "}
         </ol>
       </div>
-      {/* Here if this button is clicked, a delete request for this particular
-      issue will be called */}
-      <form action="post">
         <button
-          type="submit"
           className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
         >
           Cancel
         </button>
-      </form>
     </div>
   );
 };
