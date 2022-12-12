@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useToggleError } from "../services/ErrorContext";
 import { getTicket } from "../services/ticket";
@@ -24,13 +24,17 @@ const CompletedRequest = () => {
   const toggle = useToggleError();
   const { id } = useParams();
   const [patientData, setPatientData] = useState([])
-
+  let navigate = useNavigate();
 
   useEffect(()=> {
     getTicket(id).then((ticket)=> {
       ticket.createdAt = new Date(ticket.createdAt).toLocaleTimeString() + " " + new Date(ticket.createdAt).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(ticket.createdAt).toLocaleString('default', { month: 'short' })
       ticket.updatedAt = new Date(ticket.updatedAt).toLocaleTimeString() + " " + new Date(ticket.updatedAt).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(ticket.updatedAt).toLocaleString('default', { month: 'short' })
       setPatientData(ticket)
+      if(ticket.status != "closed") {
+        navigate('/pendingRequest/'+id) 
+      }
+
     })
     .catch( (error)=> {
       toggle(
