@@ -1,13 +1,13 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 const IssueSuccess = () => {
-
   let { id } = useParams();
   const pendingRequestLink = "/pendingRequest/" + id;
   return (
     <div className="grid h-screen place-items-center ">
       <div className="flex flex-col items-center bg-regal-blue p-8 rounded-lg mt-5 w-96">
-        <div className="block text-center mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        {/* here I have changed the css because the text was white and not visible even in light moe */}
+        <div className="block text-center mb-2 text-sm font-medium text-gray-900">
           Your Query has been successfully submitted with ID: {id}
         </div>
 
