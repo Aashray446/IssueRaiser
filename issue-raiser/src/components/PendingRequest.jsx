@@ -2,7 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 // import Timeline from "./Timeline";
 const PendingRequest = () => {
-
   const { id } = useParams();
 
   const TimelineData = [
@@ -19,14 +18,33 @@ const PendingRequest = () => {
       Action: "Action Pending",
     },
   ];
+  const patientData = {
+    firstName: "Indira Kumar",
+    lastName: "A K",
+    department: "Room Services",
+    issueContext: "Fan not working",
+  };
   return (
     <div className="p-8">
-      <div className="mb-2">ID : <span className="text-sm"> {id}</span></div>
+      <div className="mb-2">
+        ID : <span className="text-sm"> {id}</span>
+      </div>
       <div className="border-solid border-4 p-5 border-rounded hover:border-dotted">
         <div className="text-lg">Average Response Time</div>
         <div className="mt-5 text-sm">
           <i>48 mins</i>
         </div>
+      </div>
+      <div className="p-5 pl-0">
+        <p>
+          <b>Issue Context:</b> {patientData.issueContext}
+        </p>
+        <p>
+          <b>Department:</b> {patientData.department}
+        </p>
+        <p>
+          <b>Patient Name:</b> {patientData.firstName + patientData.lastName}
+        </p>
       </div>
       <div className="overflow-y-auto">
         <ol class="relative border-l border-gray-200 dark:border-gray-700 mt-10">
