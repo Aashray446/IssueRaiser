@@ -49,3 +49,32 @@ export const getTicket = async (ticketId) => {
 
 }
 
+export const updateStatus = async (ticketId, status) => {
+    options.url = SERVER_URL + '/ticket/updateStatus/';
+    options.method = 'POST';
+    options.data = { status: status, ticketId: ticketId };
+    // Updating the ticket status
+    try {
+        const response = await axios(options);
+        if (response.status == 200) {
+            return Promise.resolve()
+        }
+    } catch (error) {
+        return Promise.reject("Ticket Not Found")
+    }
+}
+
+export const deleteTicket = async (ticketId) => {
+    options.url = SERVER_URL + '/ticket/deleteTicket/';
+    options.method = 'POST';
+    options.data = { ticketId: ticketId };
+    // Deleting the ticket
+    try {
+        const response = await axios(options);
+        if (response.status == 200) {
+            return Promise.resolve()
+        }
+    } catch (error) {
+        return Promise.reject("Ticket Not Found")
+    }
+}
