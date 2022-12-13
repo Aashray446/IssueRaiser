@@ -2,21 +2,21 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useToggleError } from "../services/ErrorContext";
-import { getTicket } from "../services/ticket";
+import { getTicket, updateStatus } from "../services/ticket";
 // import Timeline from "./Timeline";
 const CompletedRequest = () => {
   //   Here we will make a get request and fetch the TimelineData array
   const TimelineData = [
     {
-      date: "17 February 2022",
+      date: "12 Dec 2022",
       Action: "Attended by support executives",
     },
     {
-      date: "19 February 2022",
-      Action: "Assigned to cleaning department",
+      date: "12 Dec 2022",
+      Action: "Assigned to Repair department",
     },
     {
-      date: "20 February 2022",
+      date: "13 Dec 2022",
       Action: "Issue Resolved",
     },
   ];
@@ -49,11 +49,23 @@ const CompletedRequest = () => {
   
   function raiseIssue() {
     // here a put request for update patientData with feedback
-    toggle(
-      {
-        error: true,
-        message: "Your issue has been raised again successfully",
-      });
+    updateStatus(id, "pending").then(()=> {
+      toggle(
+        {
+          error: true,
+          message: "Your issue has been raised again successfully",
+        });
+      navigate('/pendingRequest/'+id)
+    })
+    .catch( (error)=> {
+      toggle(
+        {
+          error: true,
+          message: error,
+        }
+      );
+      
+    })
   }
 
   function handleFeedbackSubmit(e) {
@@ -77,7 +89,7 @@ const CompletedRequest = () => {
       </p>
       <div className="grid grid-cols-2 mt-2">
         <div className="mb-2 ml-5">
-          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+          <h2 className="md:text-sm tracking-normal text-xs font-medium">
             Patient Name:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
@@ -85,7 +97,7 @@ const CompletedRequest = () => {
           </p>
         </div>
         <div className="mb-2 ml-5">
-          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+          <h2 className="md:text-sm tracking-normal text-xs font-medium">
             Issue Opened Date:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
@@ -93,7 +105,7 @@ const CompletedRequest = () => {
           </p>
         </div>
         <div className="mb-2 ml-5">
-          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+          <h2 className="md:text-sm tracking-normal text-xs font-medium">
             Issue Closed Date:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
@@ -102,7 +114,7 @@ const CompletedRequest = () => {
         </div>
       </div>
       <div className="mb-8 ml-5">
-          <h2 className="md:text-sm tracking-normal text-xs font-semibold">
+          <h2 className="md:text-sm tracking-normal text-xs font-medium">
             Issue Context:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">

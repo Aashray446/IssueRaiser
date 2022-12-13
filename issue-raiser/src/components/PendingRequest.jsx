@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams, useRouteError } from "react-router-dom";
 import { useToggleError } from "../services/ErrorContext";
-import { getTicket } from "../services/ticket";
+import { getTicket, deleteTicket} from "../services/ticket";
 // import Timeline from "./Timeline";
 const PendingRequest = () => {
   
@@ -32,7 +32,6 @@ const PendingRequest = () => {
     getTicket(id).then((ticket)=> {
       ticket.createdAt = new Date(ticket.createdAt).toLocaleTimeString() + " " + new Date(ticket.createdAt).toLocaleDateString()
       setPatientData(ticket)
-      
       if(ticket.status == "closed") {
         navigate('/completedRequest/'+id) 
       }
@@ -50,6 +49,16 @@ const PendingRequest = () => {
   }, [])
   
  
+  const cancelTicket = () => {
+    deleteTicket(id).then(()=> {
+      toggle({error: true,message: "Ticket Cancelled"});
+      navigate('/?room-no='+patientData.RoomId) 
+    })
+    .catch( (error)=> {
+      toggle({error: true,message: error});
+    })
+  };
+
 
 
   return (
@@ -116,7 +125,7 @@ const PendingRequest = () => {
         </ol>
       </div>
         <button
-          
+          onClick={cancelTicket}
           className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
         >
           Cancel
