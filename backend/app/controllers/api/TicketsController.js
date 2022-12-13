@@ -151,11 +151,37 @@ function TicketsController() {
 		}
 	}
 
+	const _deleteTicket = async (req, res) => {
+
+
+		const { ticketId } = req.body;
+
+		try {
+
+			const result = await ticketFacade.delete({
+				ticketId
+			});
+
+			return createOKResponse({
+				res,
+				content: {
+					result
+				}
+			})
+
+		}
+		catch (error) {
+			console.error("TicketController._deleteTicket error: ", error);
+			return _processError(error, req, res);
+		}
+	}
+
 
 	return {
 		register: _register,
 		updateStatus: _updateStatus,
 		updateDepartment: _updateDepartment,
-		getTicketInfo: _getTicketInfo
+		getTicketInfo: _getTicketInfo,
+		deleteTicket: _deleteTicket
 	}
 }
