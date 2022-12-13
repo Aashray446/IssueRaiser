@@ -9,15 +9,15 @@ const PendingRequest = () => {
   
   const TimelineData = [
     {
-      date: "17 February 2022",
+      date: "17 Dec 2022",
       Action: "Attended by support executives",
     },
     {
-      date: "19 February 2022",
+      date: "17 Dec 2022",
       Action: "Assigned to cleaning department",
     },
     {
-      date: "20 February 2022",
+      date: "17 Dec 2022",
       Action: "Action Pending",
     },
   ];

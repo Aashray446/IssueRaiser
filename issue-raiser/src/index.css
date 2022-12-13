@@ -38,7 +38,7 @@ html {
 /* media query for mobile */
 @media (max-width: 640px) {
     *:root {
-        font-size: 72.5%;
+        font-size: 90%;
     }
     .wrapper {
         width: 98%;
