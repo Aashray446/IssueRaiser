@@ -99,6 +99,7 @@ const IssueForms = (props) => {
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Name
+              <abbr title="requried" className="text-red-500">*</abbr>
             </label>
           </div>
           <div className="relative z-0 mb-6 w-full group">
@@ -123,6 +124,7 @@ const IssueForms = (props) => {
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Phone number
+              <abbr title="requried" className="text-red-500">*</abbr>
             </label>
           </div>
           <div className="relative z-0 mb-6 w-full group">
@@ -138,6 +140,7 @@ const IssueForms = (props) => {
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Your Request
+            <abbr title="requried" className="text-red-500"s>*</abbr>
           </label>
           <textarea
             id="complaint"
