@@ -3,7 +3,9 @@ const path = require('path');
 const process = require('process');
 const {authenticate} = require('@google-cloud/local-auth');
 const {google} = require('googleapis');
-
+var messagedata = require('./messagedata.json');
+const dotenv = require('dotenv');
+dotenv.config({ path: '../../.env'});
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly','https://mail.google.com/',
 'https://www.googleapis.com/auth/gmail.modify',
@@ -12,8 +14,7 @@ const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly','https://mail.g
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = path.join(process.cwd(), 'token.json');
-const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json');
+
 const gmail = google.gmail('v1');
 /**
  * Reads previously authorized credentials from the save file.
@@ -22,8 +23,7 @@ const gmail = google.gmail('v1');
  */
 async function loadSavedCredentialsIfExist() {
   try {
-    const content = await fs.readFile(TOKEN_PATH);
-    const credentials = JSON.parse(content);
+    const credentials = JSON.parse(process.env.TOKEN);
     return google.auth.fromJSON(credentials);
   } catch (err) {
     return null;
@@ -36,8 +36,7 @@ async function loadSavedCredentialsIfExist() {
  * @return {Promise<void>}
  */
 async function saveCredentials(client) {
-  const content = await fs.readFile(CREDENTIALS_PATH);
-  const keys = JSON.parse(content);
+  const keys = JSON.parse(process.env.CREDENTIALS);
   const key = keys.installed || keys.web;
   const payload = JSON.stringify({
     type: 'authorized_user',
@@ -46,12 +45,8 @@ async function saveCredentials(client) {
     refresh_token: client.credentials.refresh_token,
   });
   await fs.writeFile(TOKEN_PATH, payload);
-  console.log("Data Retreived");
 }
-/**
- * Load or request or authorization to call APIs.
- *
- */
+
 async function authorize() {
   let client = await loadSavedCredentialsIfExist();
   if (client) {
@@ -69,10 +64,6 @@ async function authorize() {
 async function sendMail(auth) {
   google.options({auth});
   const gmail = google.gmail({version: 'v1', auth});
-  let messagedata = {'from':'Vyshnav','fromMail':'vyshnavunni371@gmail.com',
-  'to' : 'Phantom','toMail':'phantomknight371@gmail.com',
-  'subject' : 'Testing'};               
-  
   const messageParts = [
     `From: ${messagedata.from} <${messagedata.fromMail}>`,
     `To: ${messagedata.to} <${messagedata.toMail}>`,
@@ -90,7 +81,7 @@ async function sendMail(auth) {
   .toString('base64')
   .replace(/\+/g, '-')
   .replace(/\//g, '_')
-    .replace(/=+$/, '');
+  .replace(/=+$/, '');
     
     const res = await gmail.users.messages.send({
     userId: 'me',
