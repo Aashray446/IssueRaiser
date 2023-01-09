@@ -1,7 +1,7 @@
 {
-    "from":"Vyshnav",
-    "fromMail":"vyshnavunni371@gmail.com",
-    "to" : "Phantom",
-    "toMail":"phantomknight371@gmail.com",
+    "from":"From",
+    "fromMail":"From@gmail.com",
+    "to" : "Toaddress",
+    "toMail":"Toaddress@gmail.com",
     "subject" : "Testingggg"
 }
