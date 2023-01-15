@@ -1,30 +1,30 @@
 import IssueForms from "../components/IssueForms";
 import Searchbar from "../components/SearchBar";
 import React from "react";
-import { useState} from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function Home() {
 
     function useQuery() {
         const { search } = useLocation();
-      
+
         return React.useMemo(() => new URLSearchParams(search), [search]);
-      }
-    
-      let query = useQuery();
+    }
+
+    let query = useQuery();
 
     const [patientData, setPatientData] = useState({
-        email: "",  
+        email: "",
         patientName: "",
         patientNumber: "",
         department: "",
-        issueContext: "",
+        message: "",
         priority: "",
-        roomId: query.get("room-no"),
-      });
+        room: query.get("room-no"),
+    });
 
-   const handlePatientDataChange = (e) => {
+    const handlePatientDataChange = (e) => {
         setPatientData((prevState) => {
             return {
                 ...prevState,
@@ -34,11 +34,11 @@ export default function Home() {
     };
 
     const handleSearchDataChange = (data) => {
-        setPatientData((prevState)=> {
+        setPatientData((prevState) => {
             return {
                 ...prevState,
-                department : data?.department,
-                issueContext : data?.name
+                department: data?.department,
+                issueContext: data?.name
             }
         })
     }
@@ -46,7 +46,7 @@ export default function Home() {
     return (
         <div>
             <div className="mt-4 mx-4" >
-            <Searchbar patientData={patientData} onPatientChange={handleSearchDataChange}  className="w-100" />
+                <Searchbar patientData={patientData} onPatientChange={handleSearchDataChange} className="w-100" />
             </div>
             <div className="text-center mt-4 text-gray-700">
                 OR

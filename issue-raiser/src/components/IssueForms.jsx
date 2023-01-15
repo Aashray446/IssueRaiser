@@ -1,32 +1,53 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
 import {
-  useLocation, useNavigate 
+  useLocation, useNavigate
 } from "react-router-dom";
 import { useToggleError } from "../services/ErrorContext";
-import { createTicket } from "../services/ticket";
+import { createTicket, getDepartments } from "../services/ticket";
 import Dropdown from "./dropdown";
 
 const IssueForms = (props) => {
 
   function useQuery() {
     const { search } = useLocation();
-  
+
     return React.useMemo(() => new URLSearchParams(search), [search]);
   }
 
   let query = useQuery();
   let navigate = useNavigate();
-
-
   //  Business Logic  
-  let departmentOptions = [
-    { value: 'default', label: 'Select a department' },
-    { value: 'laundry', label: 'Laundry' },
-    { value: 'housekeeping', label: 'Housekeeping' },
-    { value: 'maintenance', label: 'Maintenance' },
-    
-  ]
+
+
+  const [departmentOptions, setDepartmentOptions] = useState([
+    { value: "", label: "Select a Department" }
+  ])
+
+  const handleDepartmentChange = (data) => {
+    setDepartmentOptions(
+      [
+        ...departmentOptions,
+        ...data
+      ]
+    )
+  }
+
+  useEffect(() => {
+    getDepartments().then(
+      (result) => {
+        result.map((item) => {
+          item.value = item.id
+          item.label = item.name
+        })
+        handleDepartmentChange(result)
+      }
+    )
+  }, [])
+
+
 
   let priorityOptions = [
     { value: 'default', label: 'Select a priority' },
@@ -35,7 +56,7 @@ const IssueForms = (props) => {
     { value: 'high', label: 'High' },
   ]
 
- 
+
   function handleDataChange(e) {
     props.onPatientChange(e);
   }
@@ -45,14 +66,14 @@ const IssueForms = (props) => {
   function handleSubmit(e) {
     e.preventDefault();
     createTicket(props.patientData).then((res) => {
-      navigate('/issueSuccess/' + res.ticketId);
+      navigate('/issueSuccess/' + res.ticket_no);
     })
-    .catch((err) => {
-    toggle({
-      error: true,
-      message: err,
-    });
-    })
+      .catch((err) => {
+        toggle({
+          error: true,
+          message: err,
+        });
+      })
   }
 
 
@@ -103,7 +124,7 @@ const IssueForms = (props) => {
             </label>
           </div>
           <div className="relative z-0 mb-6 w-full group">
-           <Dropdown name="department" className="text-sm text-gray-500 dark:text-gray-400"  value={props.patientData.department} onChange={handleDataChange} options={departmentOptions}/>
+            <Dropdown name="department" className="text-sm text-gray-500 dark:text-gray-400" value={props.patientData.department} onChange={handleDataChange} options={departmentOptions} />
           </div>
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
@@ -128,7 +149,7 @@ const IssueForms = (props) => {
             </label>
           </div>
           <div className="relative z-0 mb-6 w-full group">
-            <Dropdown name="priority" value={props.patientData.priority} onChange={handleDataChange} options={priorityOptions}/>
+            <Dropdown name="priority" value={props.patientData.priority} onChange={handleDataChange} options={priorityOptions} />
           </div>
         </div>
         <div className="text-center border-y-2 pt-4 mb-4">
@@ -136,20 +157,20 @@ const IssueForms = (props) => {
         </div>
         <div>
           <label
-            htmlFor="issueContext"
+            htmlFor="message"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Your Request
-            <abbr title="requried" className="text-red-500"s>*</abbr>
+            <abbr title="requried" className="text-red-500" s>*</abbr>
           </label>
           <textarea
             id="complaint"
             rows="4"
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Write your Request here..."
-            value={props.patientData.issueContext}
+            value={props.patientData.message}
             onChange={(e) => handleDataChange(e)}
-            name="issueContext"
+            name="message"
           ></textarea>
         </div>
         <button

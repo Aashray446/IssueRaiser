@@ -15,33 +15,32 @@ const options = {
 
 
 export const createTicket = async (ticket) => {
-    options.url = SERVER_URL + '/ticket/register';
+    options.url = SERVER_URL + 'building/tickets_post/';
     options.method = 'POST';
     options.data = ticket;
-
+    // console.log(ticket)
     // Creating the ticket
     try {
         const response = await axios(options);
-        // console.log(response);
         if (response.data) {
-            return Promise.resolve(response.data.content.ticket[0]);
+            return Promise.resolve(response.data);
         }
     } catch (error) {
-        if (error.response?.data?.error?.message) {
-            return Promise.reject(error.response.data.error.message)
+        if (error.response?.data) {
+            return Promise.reject(error.response.data)
         }
         return Promise.reject("NETWORK ERROR")
     }
 }
 
 export const getTicket = async (ticketId) => {
-    options.url = SERVER_URL + '/ticket/getTicketInfo/' + ticketId;
+    options.url = SERVER_URL + 'building/tickets_get/?ticket_no=' + ticketId;
     options.method = 'GET';
     // Fetching the ticket info
     try {
         const response = await axios(options);
         if (response.data) {
-            return Promise.resolve(response.data.content.ticket[0])
+            return Promise.resolve(response.data[0])
         }
     } catch (error) {
         return Promise.reject("Ticket Not Found")
@@ -76,5 +75,20 @@ export const deleteTicket = async (ticketId) => {
         }
     } catch (error) {
         return Promise.reject("Ticket Not Found")
+    }
+}
+
+
+export const getDepartments = async () => {
+    options.url = SERVER_URL + '/building/get_department/';
+    options.method = 'GET';
+    // Fetching the departments
+    try {
+        const response = await axios(options);
+        if (response.data) {
+            return Promise.resolve(response.data)
+        }
+    } catch (error) {
+        return Promise.reject("Departments Not Found")
     }
 }

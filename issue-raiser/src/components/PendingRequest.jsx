@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams, useRouteError } from "react-router-dom";
 import { useToggleError } from "../services/ErrorContext";
-import { getTicket, deleteTicket} from "../services/ticket";
+import { getTicket, deleteTicket } from "../services/ticket";
 // import Timeline from "./Timeline";
 const PendingRequest = () => {
-  
+
   const TimelineData = [
     {
       date: "17 Dec 2022",
@@ -21,42 +21,43 @@ const PendingRequest = () => {
       Action: "Action Pending",
     },
   ];
- 
+
   const toggle = useToggleError();
   let navigate = useNavigate();
   const { id } = useParams();
   const [patientData, setPatientData] = useState([])
 
 
-  useEffect(()=> {
-    getTicket(id).then((ticket)=> {
-      ticket.createdAt = new Date(ticket.createdAt).toLocaleTimeString() + " " + new Date(ticket.createdAt).toLocaleDateString()
+  useEffect(() => {
+    getTicket(id).then((ticket) => {
+      ticket.createdAt = new Date(ticket.created_at).toLocaleTimeString() + " " + new Date(ticket.created_at).toLocaleDateString()
       setPatientData(ticket)
-      if(ticket.status == "closed") {
-        navigate('/completedRequest/'+id) 
+      console.log(ticket)
+      if (ticket.status == "Completed") {
+        navigate('/completedRequest/' + id)
       }
 
     })
-    .catch( (error)=> {
-      toggle(
-        {
-          error: true,
-          message: error,
-        }
-      );
-      
-    })
+      .catch((error) => {
+        toggle(
+          {
+            error: true,
+            message: error,
+          }
+        );
+
+      })
   }, [])
-  
- 
+
+
   const cancelTicket = () => {
-    deleteTicket(id).then(()=> {
-      toggle({error: true,message: "Ticket Cancelled"});
-      navigate('/?room-no='+patientData.RoomId) 
+    deleteTicket(id).then(() => {
+      toggle({ error: true, message: "Ticket Cancelled" });
+      navigate('/?room-no=' + patientData.RoomId)
     })
-    .catch( (error)=> {
-      toggle({error: true,message: error});
-    })
+      .catch((error) => {
+        toggle({ error: true, message: error });
+      })
   };
 
 
@@ -83,10 +84,10 @@ const PendingRequest = () => {
         </div>
         <div className="mb-2 ml-5">
           <h2 className="md:text-sm tracking-normal text-xs font-semibold">
-            Issue Opened Date: 
+            Issue Opened Date:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
-          {patientData.createdAt}
+            {patientData.createdAt}
           </p>
         </div>
         <div className="mb-2 ml-5">
@@ -94,11 +95,11 @@ const PendingRequest = () => {
             Issue Context:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
-            {patientData.issueContext}
+            {patientData.message}
           </p>
         </div>
       </div>
-      
+
       <div className="overflow-y-auto">
         <ol className="relative border-l border-gray-200 dark:border-gray-700 mt-10">
           <li className="mb-10 ml-4">
@@ -124,12 +125,12 @@ const PendingRequest = () => {
           </li>{" "}
         </ol>
       </div>
-        <button
-          onClick={cancelTicket}
-          className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
-        >
-          Cancel
-        </button>
+      {/* <button
+        onClick={cancelTicket}
+        className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
+      >
+        Cancel
+      </button> */}
     </div>
   );
 };

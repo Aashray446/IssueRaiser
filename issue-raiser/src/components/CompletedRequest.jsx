@@ -26,46 +26,46 @@ const CompletedRequest = () => {
   const [patientData, setPatientData] = useState([])
   let navigate = useNavigate();
 
-  useEffect(()=> {
-    getTicket(id).then((ticket)=> {
-      ticket.createdAt = new Date(ticket.createdAt).toLocaleTimeString() + " " + new Date(ticket.createdAt).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(ticket.createdAt).toLocaleString('default', { month: 'short' })
+  useEffect(() => {
+    getTicket(id).then((ticket) => {
+      ticket.createdAt = new Date(ticket.created_at).toLocaleTimeString() + " " + new Date(ticket.created_at).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(ticket.created_at).toLocaleString('default', { month: 'short' })
       ticket.updatedAt = new Date(ticket.updatedAt).toLocaleTimeString() + " " + new Date(ticket.updatedAt).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(ticket.updatedAt).toLocaleString('default', { month: 'short' })
       setPatientData(ticket)
-      if(ticket.status != "closed") {
-        navigate('/pendingRequest/'+id) 
+      if (ticket.status != "Completed") {
+        navigate('/pendingRequest/' + id)
       }
 
     })
-    .catch( (error)=> {
-      toggle(
-        {
-          error: true,
-          message: error,
-        }
-      );
-      
-    })
+      .catch((error) => {
+        toggle(
+          {
+            error: true,
+            message: error,
+          }
+        );
+
+      })
   }, [])
-  
+
   function raiseIssue() {
     // here a put request for update patientData with feedback
-    updateStatus(id, "pending").then(()=> {
+    updateStatus(id, "pending").then(() => {
       toggle(
         {
           error: true,
           message: "Your issue has been raised again successfully",
         });
-      navigate('/pendingRequest/'+id)
+      navigate('/pendingRequest/' + id)
     })
-    .catch( (error)=> {
-      toggle(
-        {
-          error: true,
-          message: error,
-        }
-      );
-      
-    })
+      .catch((error) => {
+        toggle(
+          {
+            error: true,
+            message: error,
+          }
+        );
+
+      })
   }
 
   function handleFeedbackSubmit(e) {
@@ -114,13 +114,13 @@ const CompletedRequest = () => {
         </div>
       </div>
       <div className="mb-8 ml-5">
-          <h2 className="md:text-sm tracking-normal text-xs font-medium">
-            Issue Context:
-          </h2>
-          <p className="md:text-sm text-gray-600 text-xs">
-            {patientData.issueContext}
-          </p>
-        </div>
+        <h2 className="md:text-sm tracking-normal text-xs font-medium">
+          Issue Context:
+        </h2>
+        <p className="md:text-sm text-gray-600 text-xs">
+          {patientData.issueContext}
+        </p>
+      </div>
       <p>
         <b>Time Line:</b>
       </p>
@@ -171,12 +171,12 @@ const CompletedRequest = () => {
           Submit Feedback
         </button>
       </form>
-        <button
-          onClick={raiseIssue}
-          className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
-        >
-          Still Not Resolved?
-        </button>
+      <button
+        onClick={raiseIssue}
+        className=" border border-red-400 text-red-400 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-2"
+      >
+        Still Not Resolved?
+      </button>
     </div>
   );
 };

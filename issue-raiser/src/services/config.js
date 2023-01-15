@@ -1,1 +1,1 @@
-export const SERVER_URL = 'http://localhost:3001/api/v1/';
+export const SERVER_URL = 'http://192.168.234.38:8000/';
