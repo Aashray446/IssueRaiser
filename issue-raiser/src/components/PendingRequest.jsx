@@ -22,6 +22,11 @@ const PendingRequest = () => {
     },
   ];
 
+
+  const convertDate = (date) => {
+    return new Date(date).toLocaleTimeString() + " " + new Date(date).toLocaleDateString('en-US', { day: 'numeric' }) + " " + new Date(date).toLocaleString('default', { month: 'short' })
+  }
+
   const toggle = useToggleError();
   let navigate = useNavigate();
   const { id } = useParams();
@@ -79,7 +84,7 @@ const PendingRequest = () => {
             Patient Name:
           </h2>
           <p className="md:text-sm text-gray-600 text-xs">
-            {patientData.patientName}
+            {patientData.creator_name}
           </p>
         </div>
         <div className="mb-2 ml-5">
@@ -100,7 +105,7 @@ const PendingRequest = () => {
         </div>
       </div>
 
-      <div className="overflow-y-auto">
+      {/* <div className="overflow-y-auto">
         <ol className="relative border-l border-gray-200 dark:border-gray-700 mt-10">
           <li className="mb-10 ml-4">
             <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
@@ -123,6 +128,26 @@ const PendingRequest = () => {
             </time>
             <h3 className="text-sm  text-gray-900">{TimelineData[2].Action}</h3>
           </li>{" "}
+        </ol>
+      </div> */}
+      <div className="overflow-y-auto">
+        <ol className="relative border-l border-gray-200 dark:border-gray-700 mt-5">
+          {
+            patientData.agents_assigned && patientData.agents_assigned.length >= 1 && patientData.agents_assigned.map(agent => {
+              return (
+                <li className="mb-10 ml-4">
+                  <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                  <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                    {convertDate(agent.assigned_at)}
+                  </time>
+                  <h3 className="text-sm  text-gray-900">Assigned to {agent.agent}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {agent.remark}
+                  </p>
+                </li>
+              )
+            })
+          }
         </ol>
       </div>
       {/* <button
